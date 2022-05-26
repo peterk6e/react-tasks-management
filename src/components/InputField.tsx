@@ -1,14 +1,15 @@
-import { FC } from "react";
+import { FormEvent } from "react";
 import "./styles.css";
 
 interface Props {
   task: string;
   setTask(task: string): void; //React.Dispatch<React.SetStateAction<string>>
+    handleAdd(e: FormEvent): void;
 }
 
-export const InputField = ({ task, setTask }: Props) => {
+export const InputField = ({ task, setTask, handleAdd }: Props) => {
   return (
-    <form className="input">
+    <form className="input" onSubmit={handleAdd}>
       <input
         type="input"
         value={task}
