@@ -1,5 +1,5 @@
 :root {
-    --main-color: rgb(0, 100, 133);
+  --main-color: rgb(0, 100, 133);
 }
 
 .input {
@@ -20,30 +20,110 @@
 }
 
 .input__box:focus {
-    box-shadow: 0 0 10px 1000px rgba(0, 0, 0, 0.2);
-    outline: none;
+  box-shadow: 0 0 10px 1000px rgba(0, 0, 0, 0.2);
+  outline: none;
 }
 
 .input_submit {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    margin: 12px;
-    border-radius: 50px;
-    right: 0px;
-    border: none;
-    font-size: 15px;
-    background: var(--main-color);
-    color: white;
-    transition: 0.2s all;
-    box-shadow: 0 0 10px black;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  margin: 12px;
+  border-radius: 50px;
+  right: 0px;
+  border: none;
+  font-size: 15px;
+  background: var(--main-color);
+  color: white;
+  transition: 0.2s all;
+  box-shadow: 0 0 10px black;
 }
 
 .input_submit:hover {
-    background: rgb(0, 132, 176);
+  background: rgb(0, 132, 176);
 }
 
 .input_submit:active {
-    transform: scale(0.8);
-    box-shadow: 0 0 5px black;
+  transform: scale(0.8);
+  box-shadow: 0 0 5px black;
+}
+
+.tasks {
+  display: flex;
+  justify-content: space-evenly;
+  width: 90%;
+  flex-wrap: wrap;
+}
+
+.task {
+  color: rgb(40, 40, 40);
+  display: flex;
+  width: 30%;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f8f6f2;
+  margin: 15px;
+  transition: 0.4s all;
+}
+
+.task-text {
+  flex: 1;
+  padding: 5px;
+  border: none;
+  font-size: 20px;
+}
+
+.done {
+  transition: 0.4s all;
+  background: rgb(91, 173, 56);
+  color: white;
+}
+
+.done .task-text {
+  text-decoration: line-through;
+}
+
+.task-text:focus {
+  outline: none;
+}
+
+.icon {
+  margin-left: 10px;
+  font-size: 25px;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+
+.icon:hover {
+  color: rgb(0, 100, 133);
+}
+
+.edit-text {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.edit-text:focus {
+  outline: none;
+  border: 1px solid rgb(0, 100, 133);
+}
+
+@media (max-width: 700px) {
+  .input {
+    width: 95%;
+  }
+  .tasks {
+    width: 95%;
+  }
+  .task {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .task {
+    width: 40%;
+  }
 }
