@@ -1,6 +1,7 @@
 import { FC, FormEvent, useState } from "react";
 import { InputField } from "./components/InputField";
 import { Task } from "./model";
+import { TasksList } from "./components/TasksList";
 import "./App.css";
 
 const App: FC = () => {
@@ -22,6 +23,7 @@ const App: FC = () => {
     <div className="App">
       <span className="heading">Tasks Management Tool</span>
       <InputField task={task} setTask={setTask} handleAdd={handleAdd} />
+      <TasksList tasks={tasks} setTasks={setTasks}/>
     </div>
   );
 };
