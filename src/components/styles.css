@@ -70,7 +70,7 @@
   color: rgb(40, 40, 40);
   display: flex;
   border-radius: 5px;
-  padding: 20px;
+  padding: 10px;
   background-color: #f8f6f2;
   margin: 15px;
   transition: 0.4s all;
@@ -104,7 +104,10 @@
   flex: 1;
   padding: 5px;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 350px;
 }
 
 .done {
@@ -126,6 +129,7 @@
   font-size: 25px;
   cursor: pointer;
   transition: 0.2s all;
+  display: block;
 }
 
 .icon:hover {
@@ -133,10 +137,14 @@
 }
 
 .edit-text {
+  width:95%;
   border: none;
   outline: none;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 18px;
+  overflow: visible;
+  /* word-wrap: break-word; */
+  max-width: 350px;
 }
 
 .edit-text:focus {

@@ -6,24 +6,18 @@ import "./styles.css";
 
 interface Props {
   tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   inProgressTasks: Task[];
-  setInProgressTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   testTasks: Task[];
-  setTestTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   completedTasks: Task[];
-  setCompletedTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTasksInColumn(tasks: Task[], columnId: number): void;
 }
 
 export const TasksList = ({
   tasks,
-  setTasks,
   inProgressTasks,
-  setInProgressTasks,
   testTasks,
-  setTestTasks,
   completedTasks,
-  setCompletedTasks,
+  setTasksInColumn,
 }: Props) => {
   const [headerCol1, setHeaderCol1] = useState<string>("Backlog");
   const [headerCol2, setHeaderCol2] = useState<string>("In Progress");
@@ -39,7 +33,6 @@ export const TasksList = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {/* <span className="tasks-heading">Backlog</span> */}
             <input
               className="tasks-heading"
               value={headerCol1}
@@ -52,7 +45,7 @@ export const TasksList = ({
                   task={task}
                   tasks={tasks}
                   key={task.id}
-                  setTasks={setTasks}
+                  setTasksInColumn={setTasksInColumn}
                 />
               );
             })}
@@ -78,9 +71,9 @@ export const TasksList = ({
                 <SingleTask
                   index={index}
                   task={task}
-                  tasks={tasks}
+                  tasks={inProgressTasks}
                   key={task.id}
-                  setTasks={setInProgressTasks}
+                  setTasksInColumn={setTasksInColumn}
                 />
               );
             })}
@@ -106,9 +99,9 @@ export const TasksList = ({
                 <SingleTask
                   index={index}
                   task={task}
-                  tasks={tasks}
+                  tasks={testTasks}
                   key={task.id}
-                  setTasks={setTestTasks}
+                  setTasksInColumn={setTasksInColumn}
                 />
               );
             })}
@@ -134,9 +127,9 @@ export const TasksList = ({
                 <SingleTask
                   index={index}
                   task={task}
-                  tasks={tasks}
+                  tasks={completedTasks}
                   key={task.id}
-                  setTasks={setCompletedTasks}
+                  setTasksInColumn={setTasksInColumn}
                 />
               );
             })}
