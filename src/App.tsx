@@ -8,13 +8,15 @@ import "./App.css";
 const App: FC = () => {
   const [task, setTask] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [inProgressTasks, setInProgressTasks] = useState<Task[]>([]);
+  const [testTasks, setTestTasks] = useState<Task[]>([]);
   const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
 
   const handleAdd = (e: FormEvent) => {
     e.preventDefault();
 
     if (task) {
-      setTasks([...tasks, { id: Date.now(), task: task, isDone: false }]);
+      setTasks([...tasks, { id: Date.now(), task: task, isDone: false, columnId: 0 }]);
       setTask("");
     }
   };
@@ -26,31 +28,46 @@ const App: FC = () => {
 
     if (!destination) return;
     if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
+      destination.droppableId === source.droppableId 
     )
       return;
 
-      let add,
-      active = tasks,
-      completed = completedTasks;
 
-      if(source.droppableId === "backlogList" ) {
-        add = active[source.index]
-        active.splice(source.index, 1);
-      } else {
-        add = completed[source.index]
-        completed.splice(source.index, 1);
-      }
+    let dragged: Task ={id:0, task:'', isDone: false, columnId: 0}
 
-      if(destination.droppableId === "backlogList" ) {
-        active.splice(source.index, 0, add);
-      } else {
-        completed.splice(source.index, 0, add);
-      }
+    if (source.droppableId === "backlogList") {
+      setTasks(tasks.filter((task, index)=> index !== source.index));
+      dragged = tasks[source.index];
+    }
+    if (source.droppableId === "inProgressList") {
+      dragged = inProgressTasks[source.index]
+      setInProgressTasks(inProgressTasks.filter((task, index)=> index !== source.index))
+    }
+    if (source.droppableId === "testList") {
+      dragged = testTasks[source.index]
+      setTestTasks(testTasks.filter((task, index)=> index !== source.index));
+    }
+    if (source.droppableId === "completedList") {
+      dragged = completedTasks[source.index]
+      setCompletedTasks(completedTasks.filter((task, index)=> index !== source.index));
+    }
 
-        setTasks(active);
-        setCompletedTasks(completed);
+    if (destination.droppableId === "backlogList") {
+      dragged.columnId = 0;
+      setTasks([...tasks, dragged]);
+    }
+    if (destination.droppableId === "inProgressList") {
+      dragged.columnId = 1;
+      setInProgressTasks([...inProgressTasks, dragged]);
+    }
+    if (destination.droppableId === "testList") {
+      dragged.columnId = 2
+      setTestTasks([...testTasks, dragged]);
+    }
+    if (destination.droppableId === "completedList") {
+      dragged.columnId = 3
+      setCompletedTasks([...completedTasks, dragged]);
+    }
   };
 
   return (
@@ -61,6 +78,10 @@ const App: FC = () => {
         <TasksList
           tasks={tasks}
           setTasks={setTasks}
+          inProgressTasks={inProgressTasks}
+          setInProgressTasks={setInProgressTasks}
+          testTasks={testTasks}
+          setTestTasks={setTestTasks}
           completedTasks={completedTasks}
           setCompletedTasks={setCompletedTasks}
         />

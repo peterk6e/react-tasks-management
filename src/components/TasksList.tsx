@@ -7,6 +7,10 @@ import "./styles.css";
 interface Props {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  inProgressTasks: Task[];
+  setInProgressTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  testTasks: Task[];
+  setTestTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   completedTasks: Task[];
   setCompletedTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
@@ -14,6 +18,10 @@ interface Props {
 export const TasksList = ({
   tasks,
   setTasks,
+  inProgressTasks,
+  setInProgressTasks,
+  testTasks,
+  setTestTasks,
   completedTasks,
   setCompletedTasks,
 }: Props) => {
@@ -53,21 +61,61 @@ export const TasksList = ({
         )}
       </Droppable>
 
-      <div className="tasks">
-        <input
-          className="tasks-heading"
-          value={headerCol2}
-          onChange={(e) => setHeaderCol2(e.target.value)}
-        />
-      </div>
+      <Droppable droppableId="inProgressList">
+        {(provided, snapshot) => (
+          <div
+            className={`tasks ${snapshot.isDraggingOver ? "drag-active" : ""}`}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <input
+              className="tasks-heading"
+              value={headerCol2}
+              onChange={(e) => setHeaderCol2(e.target.value)}
+            />
+            {inProgressTasks.map((task, index) => {
+              return (
+                <SingleTask
+                  index={index}
+                  task={task}
+                  tasks={tasks}
+                  key={task.id}
+                  setTasks={setInProgressTasks}
+                />
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
 
-      <div className="tasks">
-        <input
-          className="tasks-heading"
-          value={headerCol3}
-          onChange={(e) => setHeaderCol3(e.target.value)}
-        />
-      </div>
+      <Droppable droppableId="testList">
+        {(provided, snapshot) => (
+          <div
+            className={`tasks ${snapshot.isDraggingOver ? "drag-active" : ""}`}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <input
+              className="tasks-heading"
+              value={headerCol3}
+              onChange={(e) => setHeaderCol3(e.target.value)}
+            />
+            {testTasks.map((task, index) => {
+              return (
+                <SingleTask
+                  index={index}
+                  task={task}
+                  tasks={tasks}
+                  key={task.id}
+                  setTasks={setTestTasks}
+                />
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
 
       <Droppable droppableId="completedList">
         {(provided, snapshot) => (
