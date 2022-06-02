@@ -3,35 +3,45 @@ import { Task } from "../model";
 import "./styles.css";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdDoneAll } from "react-icons/md";
+import { Draggable } from "react-beautiful-dnd";
 
 interface Props {
   task: Task;
   tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTasksInColumn(tasks: Task[], columnId: number): void;
+  index: number;
 }
 
-export const SingleTask = ({ task, tasks, setTasks }: Props) => {
+export const SingleTask = ({ task, tasks, setTasksInColumn, index }: Props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editText, setEditText] = useState<string>(task.task);
 
-  const handleDone = (id: number) => {
-    setTasks(
+  const handleDone = (doneTask: Task) => {
+    setTasksInColumn(
       tasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
-      )
+        task.id === doneTask.id ? { ...task, isDone: !task.isDone } : task
+      ),
+      doneTask.columnId
     );
   };
 
-  const handleEdit = (e: FormEvent, id: number) => {
+  const handleEdit = (e: FormEvent, editTask: Task) => {
     e.preventDefault();
-    setTasks(
-      tasks.map((task) => (task.id === id ? { ...task, task: editText } : task))
+    setTasksInColumn(
+      tasks.map((task) =>
+        task.id === editTask.id ? { ...task, task: editText } : task
+      ),
+      editTask.columnId
     );
+
     setEdit(false);
   };
 
-  const handleDelete = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+  const handleDelete = (deleteTask: Task) => {
+    setTasksInColumn(
+      tasks.filter((task) => task.id !== deleteTask.id),
+      deleteTask.columnId
+    );
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,35 +52,49 @@ export const SingleTask = ({ task, tasks, setTasks }: Props) => {
   const done = task.isDone ? "task done" : "task";
 
   return (
-    <form className={done} onSubmit={(e) => handleEdit(e, task.id)}>
-      {edit ? (
-        <input
-          ref={inputRef} //autoFocus
-          value={editText}
-          onChange={(e) => setEditText(e.target.value)}
-          className="edit-text"
-        />
-      ) : (
-        <span className="task-text">{task.task}</span>
-      )}
-      <div>
-        <span
-          className="icon"
-          onClick={() => {
-            if (!edit && !task.isDone) {
-              setEdit(!edit);
-            }
-          }}
+    <Draggable draggableId={task.id.toString()} index={index}>
+      {(provided) => (
+        <form
+          className={done}
+          onSubmit={(e) => handleEdit(e, task)}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
         >
-          <AiFillEdit />
-        </span>
-        <span className="icon" onClick={() => handleDelete(task.id)}>
-          <AiFillDelete />
-        </span>
-        <span className="icon" onClick={() => handleDone(task.id)}>
-          <MdDoneAll />
-        </span>
-      </div>
-    </form>
+          {edit ? (
+            <label>
+                
+              <input
+                ref={inputRef} //autoFocus
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                className="edit-text"
+              />
+              press Enter
+            </label>
+          ) : (
+            <span className="task-text">{task.task}</span>
+          )}
+          <div>
+            <span
+              className="icon"
+              onClick={() => {
+                if (!edit && !task.isDone) {
+                  setEdit(!edit);
+                }
+              }}
+            >
+              <AiFillEdit />
+            </span>
+            <span className="icon" onClick={() => handleDelete(task)}>
+              <AiFillDelete />
+            </span>
+            <span className="icon" onClick={() => handleDone(task)}>
+              <MdDoneAll />
+            </span>
+          </div>
+        </form>
+      )}
+    </Draggable>
   );
 };

@@ -4,7 +4,7 @@
 
 .input {
   display: flex;
-  width: 90%;
+  width: 95%;
   position: relative;
   align-items: center;
 }
@@ -48,29 +48,66 @@
   box-shadow: 0 0 5px black;
 }
 
+.container {
+  display: flex;
+  width: 95%;
+  margin-top: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .tasks {
   display: flex;
   justify-content: space-evenly;
-  width: 90%;
-  flex-wrap: wrap;
+  width: 25%;
+  flex-direction: column;
+  padding: 15px;
+  border: 1px solid rgb(109, 109, 109);
+  background: rgb(63, 63, 63);
 }
 
 .task {
   color: rgb(40, 40, 40);
   display: flex;
-  width: 30%;
   border-radius: 5px;
-  padding: 20px;
+  padding: 10px;
   background-color: #f8f6f2;
   margin: 15px;
   transition: 0.4s all;
+}
+
+.task:hover {
+  box-shadow: 0 0 5px black;
+  transform: scale(1.02);
+}
+
+.task:active {
+    box-shadow: 0 0 5px black;
+    transform: scale(1.06);
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+
+.tasks-heading {
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  background: transparent;
+  border: none;
+}
+
+.tasks-heading:focus {
+    outline: none;
+    background: #4d4d4d;
 }
 
 .task-text {
   flex: 1;
   padding: 5px;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 350px;
 }
 
 .done {
@@ -92,6 +129,7 @@
   font-size: 25px;
   cursor: pointer;
   transition: 0.2s all;
+  display: block;
 }
 
 .icon:hover {
@@ -99,10 +137,14 @@
 }
 
 .edit-text {
+  width:95%;
   border: none;
   outline: none;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 18px;
+  overflow: visible;
+  /* word-wrap: break-word; */
+  max-width: 350px;
 }
 
 .edit-text:focus {
@@ -110,20 +152,22 @@
   border: 1px solid rgb(0, 100, 133);
 }
 
-@media (max-width: 700px) {
+.drag-active {
+    background: rgb(75, 75, 75);
+    border: 1px solid rgb(188, 188, 188);
+}
+
+
+@media (max-width: 1100px) {
   .input {
     width: 95%;
   }
+
   .tasks {
     width: 95%;
   }
-  .task {
-    width: 100%;
-  }
-}
 
-@media (max-width: 1200px) {
-  .task {
-    width: 40%;
+  .container {
+    flex-direction: column;
   }
 }
