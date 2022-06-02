@@ -12,10 +12,10 @@ The user can add, edit, delete tasks. Tasks can be set as completed. This tool a
 - TypeScript
 - react-beautiful-dnd
 
-[live demo](https://peterk6e.github.io/react-tasks-management/)
+[live demo](https://peterk6e.github.io/react-tasks-management)
 
 <div align="center">
   
-![alt text](https://github.com/peterk6e/.github/taskmanag.JPG?raw=true)
+  <img src="https://github.com/peterk6e/react-tasks-management/blob/master/.github/taskmanag.jpg" width="403" height="204">
 
 </div>
